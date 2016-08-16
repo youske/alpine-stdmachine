@@ -4,22 +4,17 @@ FROM youske/alpine-stdmachine:latest
 MAINTAINER youske miyakoshi <youske@gmail.com>
 
 LABEL com.stdmachine.description="alpine nodejs image" \
+      com.stdmachine.vendor="stdmachie" \
       com.stdmachine.role="baseimage"
 
 ENV PATH=$PATH \
-    LANG=C.UTF-8 \
-    WORK_DIR=/home/admin \
-    PACKAGE='bash nodejs ca-certificates' \
-    BUILDPACK='wget build-base linux-headers musl-dev git nodejs-dev'
+    PACKAGE='nodejs' \
+    BUILDPACK='build-base linux-headers musl-dev nodejs-dev'
 
-RUN adduser -D -h /home/admin -s /bin/bash admin admin
+COPY package.json /tmp/package.json
 
 RUN apk update upgrade --no-cache && \
     apk add ${PACKAGE} --no-cache && \
-    apk add ${BUILDPACK} --no-cache -t buildpack
-
-COPY package.json /tmp/package.json
-RUN cd /tmp && npm install -g
-# gulp pm2 forever
-
-RUN apk del buildpack --no-cache && rm -rf /tmp/* /var/cache/apk/*
+    apk add ${BUILDPACK} --no-cache -t buildpack && \
+    cd /tmp && npm install -g && \
+    apk del buildpack --no-cache && rm -rf /tmp/* /var/cache/apk/*

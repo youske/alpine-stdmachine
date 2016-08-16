@@ -4,6 +4,7 @@ FROM alpine:latest
 MAINTAINER youske miyakoshi <youske@gmail.com>
 
 LABEL com.stdmachine.description="alpine standard image" \
+      com.stdmachine.vendor="stdmachine" \
       com.stdmachine.role="baseimage"
 
 # s6-overlay

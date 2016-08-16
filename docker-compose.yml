@@ -65,3 +65,8 @@ services:
     build: nodejs-python
     depends_on:
       - conda3
+
+  php:
+    build: php
+    depends_on:
+      - base
