@@ -29,6 +29,14 @@ ENV PACKAGE='bash wget python ca-certificates' \
     PATH=$PATH \
     WORK_DIR=/workdir
 
+
+# timezone settings
+ENV TZ=Asia/Tokyo
+RUN apk --update add tzdata && \
+    cp /usr/share/zoneinfo/${TZ} /etc/localtime && echo $TZ > /etc/timezone && \
+    apk del tzdata
+
+
 # package install & update
 RUN echo "http://dl-3.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
 RUN apk update upgrade --no-cache && \

@@ -3,9 +3,9 @@
 FROM youske/alpine-stdmachine:base
 MAINTAINER youske miyakoshi <youske@gmail.com>
 
-LABEL com.geeplus.description="alpine standard image" \
-      com.geeplus.vendor="geeplus.inc" \
-      com.geeplus.role="baseimage"
+LABEL com.stdmachine.description="alpine standard image" \
+      com.stdmachine.vendor="geeplus.inc" \
+      com.stdmachine.role="elixir image"
 
 # s6-overlay
 ENV S6OVERLAY_VERSION="v1.11.0.1"
