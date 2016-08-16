@@ -28,7 +28,7 @@ services:
     build: elixir
     depends_on:
       - base
-    
+
   jdk7:
     build: java7
     depends_on:
@@ -41,8 +41,6 @@ services:
 
   go:
     build: go
-    ulimits:
-      nproc: 65535
     depends_on:
       - base
 
