@@ -1,0 +1,69 @@
+version: "2"
+services:
+
+  base:
+    build: base
+    ulimits:
+      nproc: 65535
+      nofile:
+        soft: 20000
+        hard: 40000
+
+  conda2:
+    build: conda2
+    depends_on:
+      - base
+
+  conda3:
+    build: conda3
+    depends_on:
+      - base
+
+  nodejs:
+    build: nodejs
+    depends_on:
+      - base
+
+  elixir:
+    build: elixir
+    depends_on:
+      - base
+    
+  jdk7:
+    build: java7
+    depends_on:
+      - base
+
+  jdk8:
+    build: java8
+    depends_on:
+      - base
+
+  go:
+    build: go
+    ulimits:
+      nproc: 65535
+    depends_on:
+      - base
+
+  r-python3:
+    build: r-python
+    depends_on:
+      - conda3
+
+  r-python2:
+    build: r-python
+    ulimits:
+      nproc: 65535
+    depends_on:
+      - conda2
+
+  nodejs-python2:
+    build: nodejs-python
+    depends_on:
+      - conda2
+
+  nodejs-python3:
+    build: nodejs-python
+    depends_on:
+      - conda3
