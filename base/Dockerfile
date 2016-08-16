@@ -30,37 +30,30 @@ ENV PACKAGE='bash wget python ca-certificates' \
     PATH=$PATH \
     WORK_DIR=/workdir
 
-
 # timezone settings
 ENV TZ=Asia/Tokyo
 RUN apk --update add tzdata && \
     cp /usr/share/zoneinfo/${TZ} /etc/localtime && echo $TZ > /etc/timezone && \
     apk del tzdata
 
-
 # package install & update
-RUN echo "http://dl-3.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
-RUN apk update upgrade --no-cache && \
+RUN echo "http://dl-3.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && \
+    apk update upgrade --no-cache && \
     apk add ${PACKAGE} --no-cache && \
     apk add ${BUILDPACK} --no-cache -t buildpack
 
-# entrykit install
+# docker support install
 RUN tar zxf /tmp/${ENTRYKIT_FILE} -C /usr/bin && \
-    chmod +x /usr/bin/entrykit && /usr/bin/entrykit --symlink
-
-# gosu
-RUN  chmod +x /usr/bin/gosu-amd64 && ln -s /usr/bin/gosu-amd64 /usr/bin/gosu
-
-# s6-overlay
-RUN tar zxf /tmp/s6-overlay-amd64.tar.gz -C /
-
-# admin user
-RUN adduser -D -h /home/admin -s /bin/bash admin admin
+    chmod +x /usr/bin/entrykit && /usr/bin/entrykit --symlink && \
+    chmod +x /usr/bin/gosu-amd64 && ln -s /usr/bin/gosu-amd64 /usr/bin/gosu && \
+    tar zxf /tmp/s6-overlay-amd64.tar.gz -C /
 
 # pre installed package remove
 RUN apk del buildpack --no-cache && rm -rf /tmp/* /var/cache/apk/*
 
-RUN mkdir -p ${WORK_DIR}
+# admin user
+RUN adduser -D -h /home/admin -s /bin/bash admin admin && \
+    mkdir -p ${WORK_DIR}
 
 WORKDIR ${WORK_DIR}
 ENTRYPOINT ["switch","shell=/bin/bash","--","/init"]

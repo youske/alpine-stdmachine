@@ -1,6 +1,6 @@
 # Alpine Linux standard
 
-FROM youske/alpine-stdmachine:base
+FROM youske/alpine-stdmachine:nodejs
 MAINTAINER youske miyakoshi <youske@gmail.com>
 
 LABEL com.geeplus.description="alpine standard image" \
