@@ -1,22 +1,11 @@
-# Alpine Linux glibc with conda
+# Alpine Linux glibc with conda2
 
 FROM frolvlad/alpine-glibc
 MAINTAINER youske miyakoshi <youske@gmail.com>
 
-LABEL com.geeplus.description="alpine miniconda image" \
-      com.geeplus.role="baseimage"
-
-# s6-overlay
-ENV S6OVERLAY_VERSION="v1.11.0.1"
-ENV S6OVERLAY_URL="https://github.com/just-containers/s6-overlay/releases/download/${S6OVERLAY_VERSION}/s6-overlay-amd64.tar.gz"
-ADD ${S6OVERLAY_URL} /tmp/
-
-ENV ENTRYKIT_VERSION=0.4.0
-ENV ENTRYKIT_FILE=entrykit_${ENTRYKIT_VERSION}_Linux_x86_64.tgz
-ENV ENTRYKIT_DOWNLOAD=https://github.com/progrium/entrykit/releases/download/v${ENTRYKIT_VERSION}/${ENTRYKIT_FILE}
-
-ENV GOSU_VERSION=1.7
-ENV GOSU_DOWNLOAD=https://github.com/tianon/gosu/releases/download/${GOSU_VERSION}/gosu-amd64
+LABEL com.stdmachine.description="alpine conda2 image" \
+      com.stdmachine.vendor="stdmachine" \
+      com.stdmachine.role="conda2 image"
 
 ENV CONDA_BASE=/conda
 ENV MINICONDA=Miniconda-latest-Linux-x86_64.sh

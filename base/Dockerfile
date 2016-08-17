@@ -21,9 +21,7 @@ ADD https://github.com/tianon/gosu/releases/download/${GOSU_VERSION}/gosu-amd64 
 ENV LC_ALL=C.UTF-8
 ENV LANG=ja_JP.UTF-8
 ENV LANGUAGE=${LANG}
-
-ENV PATH=${PATH} \
-    WORK_DIR=/workdir
+ENV WORK_DIR=/workdir
 
 # timezone settings
 ENV TZ=Asia/Tokyo
@@ -43,11 +41,11 @@ RUN tar zxf /tmp/${ENTRYKIT_FILE} -C /usr/bin && \
     tar zxf /tmp/s6-overlay-amd64.tar.gz -C /
 
 RUN \
-  # pre installed package remove
-  rm -rf /tmp/* /var/cache/apk/* && \
-  # admin user & work
-  adduser -D -h /home/admin -s /bin/bash admin admin && \
-  mkdir -p ${WORK_DIR}
+    # pre installed package remove
+    rm -rf /tmp/* /var/cache/apk/* && \
+    # admin user & work
+    adduser -D -h /home/admin -s /bin/bash admin admin && \
+    mkdir -p ${WORK_DIR}
 
 WORKDIR ${WORK_DIR}
 ENTRYPOINT ["switch","shell=/bin/bash","--","/init"]

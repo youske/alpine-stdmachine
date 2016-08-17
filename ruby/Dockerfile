@@ -1,6 +1,6 @@
 # Alpine Linux ruby
 
-FROM youske/alpine-stdmachine:latest
+FROM youske/alpine-stdmachine:base
 MAINTAINER youske miyakoshi <youske@gmail.com>
 
 LABEL com.stdmachine.description="alpine ruby image" \
@@ -13,7 +13,5 @@ ENV PATH=$PATH \
 
 RUN apk add ${PACKAGE} --no-cache && apk add ${BUILDPACKAGE} --no-cache -t buildtool && \
     echo 'gem: --no-document' >> /etc/gemrc && \
-    echo "gem: --user-install --no-document" >> ~/.gemrc
-
-# remove
-RUN apk del buildtool --no-cache && rm -rf /tmp/* /var/cache/apk/*
+    echo "gem: --user-install --no-document" >> ~/.gemrc && \
+    apk del buildtool --no-cache && rm -rf /tmp/* /var/cache/apk/*

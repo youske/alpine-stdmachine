@@ -2,7 +2,6 @@ FROM youske/alpine-stdmachine:base
 MAINTAINER youske miyakoshi <youske@gmail.com>
 
 LABEL com.stdmachine.description="alpine python3 image" \
-      com.stdmachine.vendor="stdmachine" \
       com.stdmachine.role="python3 image"
 
 RUN apk add --no-cache python3 && \

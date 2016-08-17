@@ -1,17 +1,12 @@
-# Alpine Linux standard
+# Alpine Linux elixir
 
 FROM youske/alpine-stdmachine:base
 MAINTAINER youske miyakoshi <youske@gmail.com>
 
-LABEL com.stdmachine.description="alpine standard image" \
-      com.stdmachine.vendor="geeplus.inc" \
+LABEL com.stdmachine.description="alpine elixir image" \
+      com.stdmachine.vendor="stdmachine" \
       com.stdmachine.role="elixir image"
 
-ENV PATH=$PATH \
-    PACKAGE='go go-cross go-tools' \
-    BUILDPACK='wget ca-certificates'
-
-RUN apk add ${PACKAGE} --no-cache && apk add ${BUILDPACK} --no-cache -t buildpack
-
-# remove
-RUN apk del buildpack --no-cache && rm -rf /tmp/* /var/cache/apk/*
+RUN apk add elixir erlang erlang-tools erlang-stdlib erlang-ssh erlang-mnesia erlang-crypto erlang-syntax-tools erlang-kernel erlang-compiler --no-cache && \
+    apk add build-base musl-dev linux-headers --no-cache -t buildpack && \
+    apk del buildpack --no-cache && rm -rf /tmp/* /var/cache/apk/*

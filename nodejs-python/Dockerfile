@@ -3,9 +3,9 @@
 FROM youske/alpine-stdmachine:nodejs
 MAINTAINER youske miyakoshi <youske@gmail.com>
 
-LABEL com.geeplus.description="alpine standard image" \
-      com.geeplus.vendor="geeplus.inc" \
-      com.geeplus.role="baseimage"
+LABEL com.stdmachine.description="alpine nodejs & python image" \
+      com.stdmachine.vendor="stdmachine" \
+      com.stdmachine.role="nodejs & python image"
 
 # s6-overlay
 ENV S6OVERLAY_VERSION="v1.11.0.1"
