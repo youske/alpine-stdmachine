@@ -44,7 +44,7 @@ RUN tar zxf /tmp/${ENTRYKIT_FILE} -C /usr/bin && \
 
 RUN \
   # pre installed package remove
-  rm -rf /tmp/* /var/cache/apk/* && && \
+  rm -rf /tmp/* /var/cache/apk/* && \
   # admin user & work
   adduser -D -h /home/admin -s /bin/bash admin admin && \
   mkdir -p ${WORK_DIR}
