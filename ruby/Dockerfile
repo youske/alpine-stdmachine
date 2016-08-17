@@ -5,10 +5,10 @@ MAINTAINER youske miyakoshi <youske@gmail.com>
 
 LABEL com.stdmachine.description="alpine ruby image" \
       com.stdmachine.vendor="stdmachine" \
-      com.stdmachine.role="baseimage"
+      com.stdmachine.role="ruby image"
 
 ENV PATH=$PATH \
-    PACKAGE='ruby ruby-irb libstdc++' \
+    PACKAGE='ruby ruby-bundler ruby-irb libstdc++' \
     BUILDPACKAGE='build-base musl-dev ruby-dev linux-headers'
 
 RUN apk add ${PACKAGE} --no-cache && apk add ${BUILDPACKAGE} --no-cache -t buildtool && \

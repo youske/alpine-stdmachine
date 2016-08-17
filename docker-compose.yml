@@ -8,6 +8,8 @@ services:
       nofile:
         soft: 20000
         hard: 40000
+  glibc:
+    build: glibc
 
   conda2:
     build: conda2
@@ -32,15 +34,25 @@ services:
   jdk7:
     build: java7
     depends_on:
-      - base
+      - glibc
 
   jdk8:
     build: java8
     depends_on:
-      - base
+      - glibc
 
   go:
     build: go
+    depends_on:
+      - base
+
+  python2:
+    build: python2
+    depends_on:
+      - base
+
+  python3:
+    build: python3
     depends_on:
       - base
 

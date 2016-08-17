@@ -1,11 +1,11 @@
 # Alpine Linux standard
 
-FROM youske/alpine-stdmachine:base
+FROM youske/alpine-stdmachine:glibc
 MAINTAINER youske miyakoshi <youske@gmail.com>
 
-LABEL com.geeplus.description="alpine standard image" \
-      com.geeplus.vendor="geeplus.inc" \
-      com.geeplus.role="baseimage"
+LABEL com.stdmachine.description="alpine java image" \
+      com.stdmachine.vendor="stdmachine" \
+      com.stdmachine.role="java image"
 
 # s6-overlay
 ENV S6OVERLAY_VERSION="v1.11.0.1"
