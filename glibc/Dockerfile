@@ -1,36 +1,34 @@
-FROM youske/alpine-stdmachine:latest
+#alpine linux with glibc
+
+FROM youske/alpine-stdmachine:base
 MAINTAINER youske miyakoshi <youske@gmail.com>
 
 WORKDIR /tmp
-RUN ALPINE_GLIBC_BASE_URL="https://github.com/sgerrand/alpine-pkg-glibc/releases/download" && \
-    ALPINE_GLIBC_PACKAGE_VERSION="2.23-r3" && \
-    ALPINE_GLIBC_BASE_PACKAGE_FILENAME="glibc-$ALPINE_GLIBC_PACKAGE_VERSION.apk" && \
-    ALPINE_GLIBC_BIN_PACKAGE_FILENAME="glibc-bin-$ALPINE_GLIBC_PACKAGE_VERSION.apk" && \
-    ALPINE_GLIBC_I18N_PACKAGE_FILENAME="glibc-i18n-$ALPINE_GLIBC_PACKAGE_VERSION.apk" && \
-#    apk add --no-cache -t .build-dependencies wget ca-certificates && \
+
+ENV LANG=C.UTF-8
+
+RUN GLIBC_BASE_URL="https://github.com/sgerrand/alpine-pkg-glibc/releases/download" && \
+    GLIBC_VERSION="2.23-r3" && \
+    GLIBC_BASE_PACKAGE="glibc-$GLIBC_VERSION.apk" && \
+    GLIBC_BIN_PACKAGE="glibc-bin-$GLIBC_VERSION.apk" && \
+    GLIBC_I18N_PACKAGE="glibc-i18n-$GLIBC_VERSION.apk" && \
     wget \
         "https://raw.githubusercontent.com/andyshinn/alpine-pkg-glibc/master/sgerrand.rsa.pub" \
         -O "/etc/apk/keys/sgerrand.rsa.pub" && \
     wget \
-        "$ALPINE_GLIBC_BASE_URL/$ALPINE_GLIBC_PACKAGE_VERSION/$ALPINE_GLIBC_BASE_PACKAGE_FILENAME" \
-        "$ALPINE_GLIBC_BASE_URL/$ALPINE_GLIBC_PACKAGE_VERSION/$ALPINE_GLIBC_BIN_PACKAGE_FILENAME" \
-        "$ALPINE_GLIBC_BASE_URL/$ALPINE_GLIBC_PACKAGE_VERSION/$ALPINE_GLIBC_I18N_PACKAGE_FILENAME" && \
+        "$GLIBC_BASE_URL/$GLIBC_VERSION/$GLIBC_BASE_PACKAGE" \
+        "$GLIBC_BASE_URL/$GLIBC_VERSION/$GLIBC_BIN_PACKAGE" \
+        "$GLIBC_BASE_URL/$GLIBC_VERSION/$GLIBC_I18N_PACKAGE" && \
     apk add --no-cache \
-        "$ALPINE_GLIBC_BASE_PACKAGE_FILENAME" \
-        "$ALPINE_GLIBC_BIN_PACKAGE_FILENAME" \
-        "$ALPINE_GLIBC_I18N_PACKAGE_FILENAME" && \
-    \
+        "$GLIBC_BASE_PACKAGE" \
+        "$GLIBC_BIN_PACKAGE" \
+        "$GLIBC_I18N_PACKAGE" && \
+    # remove key
     rm "/etc/apk/keys/sgerrand.rsa.pub" && \
+    #
     /usr/glibc-compat/bin/localedef --force --inputfile POSIX --charmap UTF-8 C.UTF-8 || true && \
     echo "export LANG=C.UTF-8" > /etc/profile.d/locale.sh && \
-    \
-    apk del glibc-i18n && \
-#    apk del .build-dependencies && \
-    rm -rf /tmp/* "/root/.wget-hsts"
-#        "$ALPINE_GLIBC_BASE_PACKAGE_FILENAME" \
-#        "$ALPINE_GLIBC_BIN_PACKAGE_FILENAME" \
-#        "$ALPINE_GLIBC_I18N_PACKAGE_FILENAME"
+    # package remove
+    apk del glibc-i18n && rm -rf /tmp/* "/root/.wget-hsts"
 
 WORKDIR /
-
-ENV LANG=C.UTF-8

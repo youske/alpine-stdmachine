@@ -23,24 +23,24 @@ ENV LANG=ja_JP.UTF-8
 ENV LANGUAGE=${LANG}
 ENV WORK_DIR=/workdir
 
-# timezone settings
 ENV TZ=Asia/Tokyo
-RUN apk --update add tzdata && \
-    cp /usr/share/zoneinfo/${TZ} /etc/localtime && echo $TZ > /etc/timezone && \
-    apk del tzdata
 
-# package install & update
 RUN echo "http://dl-3.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && \
-    apk update upgrade --no-cache && \
-    apk add bash git wget ca-certificates --no-cache
+    # timezone settings
+    apk --update add tzdata && \
+    cp /usr/share/zoneinfo/${TZ} /etc/localtime && echo $TZ > /etc/timezone && \
+    apk del tzdata && \
 
-# docker support install
-RUN tar zxf /tmp/${ENTRYKIT_FILE} -C /usr/bin && \
+    # package install & update
+    apk update upgrade --no-cache && \
+    apk add bash git wget ca-certificates --no-cache && \
+
+    # docker support install
+    tar zxf /tmp/${ENTRYKIT_FILE} -C /usr/bin && \
     chmod +x /usr/bin/entrykit && /usr/bin/entrykit --symlink && \
     chmod +x /usr/bin/gosu-amd64 && ln -s /usr/bin/gosu-amd64 /usr/bin/gosu && \
-    tar zxf /tmp/s6-overlay-amd64.tar.gz -C /
+    tar zxf /tmp/s6-overlay-amd64.tar.gz -C / && \
 
-RUN \
     # pre installed package remove
     rm -rf /tmp/* /var/cache/apk/* && \
     # admin user & work
@@ -48,5 +48,5 @@ RUN \
     mkdir -p ${WORK_DIR}
 
 WORKDIR ${WORK_DIR}
-ENTRYPOINT ["switch","shell=/bin/bash","--","/init"]
+ENTRYPOINT ["switch","shell=gosu admin /bin/bash","--","switch","root=/bin/bash","--","/init"]
 CMD ["gosu","admin","/bin/bash"]
