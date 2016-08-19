@@ -33,7 +33,7 @@ RUN echo "http://dl-3.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositor
 
     # package install & update
     apk update upgrade --no-cache && \
-    apk add bash git wget ca-certificates --no-cache && \
+    apk add bash wget ca-certificates ncurses gawk --no-cache && \
 
     # docker support install
     tar zxf /tmp/${ENTRYKIT_FILE} -C /usr/bin && \
@@ -42,7 +42,7 @@ RUN echo "http://dl-3.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositor
     tar zxf /tmp/s6-overlay-amd64.tar.gz -C / && \
 
     # pre installed package remove
-    rm -rf /tmp/* /var/cache/apk/* && \
+    rm -rf /tmp/* /var/cache/apk/* /root/.wget-hsts && \
     # admin user & work
     adduser -D -h /home/admin -s /bin/bash admin admin && \
     mkdir -p ${WORK_DIR}
