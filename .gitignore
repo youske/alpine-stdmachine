@@ -1,5 +1,6 @@
 #
 node_modules/*
+bower_components/*
 vendor/*
 tests/*
 .idea/*
@@ -7,7 +8,6 @@ tests/*
 #
 .sync-config.cson
 .remote-sync.json
-.editorconfig
 
 #
 [cCgGeE]tags
