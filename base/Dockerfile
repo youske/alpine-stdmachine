@@ -32,7 +32,7 @@ RUN echo "http://dl-3.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositor
     wget -q -nc https://github.com/tianon/gosu/releases/download/${GOSU_VERSION}/gosu-amd64 -P /usr/bin/ && \
     chmod +x /usr/bin/gosu-amd64 && ln -s /usr/bin/gosu-amd64 /usr/bin/gosu && \
     #S6OVERLAY install
-    S6OVERLAY_VERSION='v1.11.0.1' && \
+    S6OVERLAY_VERSION='v1.18.1.5' && \
     wget -q -nc https://github.com/just-containers/s6-overlay/releases/download/${S6OVERLAY_VERSION}/s6-overlay-amd64.tar.gz -P /tmp/ && \
     tar zxf /tmp/s6-overlay-amd64.tar.gz -C / && \
     # pre installed package remove
