@@ -39,7 +39,7 @@ RUN echo "http://dl-3.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositor
     rm -rf /tmp/* /var/cache/apk/* /root/.wget-hsts && \
     # admin user & work
     adduser -D -h /home/admin -s /bin/bash admin admin && \
-    mkdir -p ${WORK_DIR}
+    mkdir -p ${WORK_DIR} && chmod 777 ${WORK_DIR}
 
 WORKDIR ${WORK_DIR}
 ENTRYPOINT ["switch","shell=gosu admin /bin/bash","--","switch","root=/bin/bash","--","/init"]
